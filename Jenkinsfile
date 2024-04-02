@@ -36,7 +36,7 @@ pipeline {
             }
         }
     }
-    properties{
+    options{
         TelegramBot  {
             TelegramBotPublisher {
                 if(whenSuccess()){
