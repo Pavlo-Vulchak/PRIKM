@@ -37,14 +37,11 @@ pipeline {
         }
     }
     options{
-        TelegramBot  {
-            TelegramBotPublisher {
-                if(whenSuccess()){
-                    telegramSend {
-                        message('success')
-                        chatId(723523723)
-                    }
-                }
+        if(whenSuccess()){
+            telegramSend {
+                message('success')
+                chatId(723523723)
+                
             }
         }
     }
