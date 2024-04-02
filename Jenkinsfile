@@ -42,7 +42,7 @@ pipeline {
         success {
             script {
                 // Send Telegram notification on success
-                telegramSend message: "Build successful! 🎉", chatId: 723523723
+                telegramSend chatId: 723523723, message: "Build successful! 🎉"
             }
         }
         failure {
