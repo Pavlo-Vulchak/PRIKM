@@ -35,12 +35,12 @@ pipeline {
                 sh "docker run -d -p 80:80 vulchakpavlo/prikm"
 
                 script{
-                    if(whenSuccess){
-                        telegramSend {
-                            message('success')
-                            chatId(723523723)
+                    step([$class: 'TelegramBotPublisher']){
+                        if(whenSuccess){
+                            sh "echo ok"
                         }
                     }
+                    
                 }
             }
         }
