@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Start') {
             steps {
-                echo 'Lab_2: started by GitHub'
+                echo 'Lab_3: started by GitHub'
             }
         }
 
@@ -35,5 +35,17 @@ pipeline {
                 sh "docker run -d -p 80:80 vulchakpavlo/prikm"
             }
         }
-    }   
+    }
+    properties{
+        TelegramBot  {
+            TelegramBotPublisher {
+                if(whenSuccess()){
+                    telegramSend {
+                        message('success')
+                        chatId(723523723)
+                    }
+                }
+            }
+        }
+    }
 }
