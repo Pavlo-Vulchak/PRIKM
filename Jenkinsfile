@@ -34,13 +34,23 @@ pipeline {
                 //sh "docker rmi \$(docker images -q) || true"
                 sh "docker run -d -p 80:80 vulchakpavlo/prikm"
 
-                script{
-                
-                    if(TelegramBotPublisher.whenSuccess()){
-                        sh "echo ok"
-                    }
-                    
-                }
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                // Send Telegram notification on success
+                telegramSend message: "Build successful! 🎉"
+                telegramSend chatId: 723523723
+            }
+        }
+        failure {
+            script {
+                // Send Telegram notification on failure
+                telegramSend message: "Build failed! 😞"
+                telegramSend chatId: 723523723
             }
         }
     }
