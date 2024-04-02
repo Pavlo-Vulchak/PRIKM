@@ -35,10 +35,9 @@ pipeline {
                 sh "docker run -d -p 80:80 vulchakpavlo/prikm"
 
                 script{
-                    step([$class: 'TelegramBotPublisher']){
-                        if(whenSuccess){
-                            sh "echo ok"
-                        }
+                
+                    if(TelegramBotPublisher.whenSuccess()){
+                        sh "echo ok"
                     }
                     
                 }
