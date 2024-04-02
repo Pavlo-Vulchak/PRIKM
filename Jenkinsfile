@@ -33,15 +33,15 @@ pipeline {
                 sh "docker image prune --force"
                 //sh "docker rmi \$(docker images -q) || true"
                 sh "docker run -d -p 80:80 vulchakpavlo/prikm"
-            }
-        }
-    }
-    options{
-        if(whenSuccess()){
-            telegramSend {
-                message('success')
-                chatId(723523723)
-                
+
+                script{
+                    if(whenSuccess()){
+                        telegramSend {
+                            message('success')
+                            chatId(723523723)
+                        }
+                    }
+                }
             }
         }
     }
