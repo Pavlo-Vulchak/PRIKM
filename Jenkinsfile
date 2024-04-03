@@ -45,12 +45,5 @@ pipeline {
                 telegramSend chatId: 723523723, message: "Build successful! 🎉"
             }
         }
-        failure {
-            script {
-                // Send Telegram notification on failure
-                telegramSend message: "Build failed! 😞"
-                telegramSend chatId: 723523723
-            }
-        }
     }
 }
