@@ -33,7 +33,6 @@ pipeline {
                 sh "docker image prune --force"
                 //sh "docker rmi \$(docker images -q) || true"
                 sh "docker run -d -p 80:80 vulchakpavlo/prikm"
-
             }
         }
     }
@@ -42,7 +41,7 @@ pipeline {
         success {
             script {
                 // Send Telegram notification on success
-                telegramSend message: "*${env.JOB_NAME}* : POC *Branch*: ${env.GIT_BRANCH} *Build* : OK *Published* = YES \n ${currentBuild.currentResult}"
+                telegramSend message: "Job Name: ${env.JOB_NAME}\nBranch: ${env.GIT_BRANCH}\nBuild: ${currentBuild.currentResult}"
             }
         }
     }
