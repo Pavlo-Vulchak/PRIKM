@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Start') {
             steps {
-                echo 'Lab_3: started by GitHub'
+                echo 'Lab_3: started by Bild periodically'
             }
         }
 
@@ -18,13 +18,12 @@ pipeline {
                 failure {
                     script {
                     // Send Telegram notification on success
-                        telegramSend message: "Job Name: ${env.JOB_NAME}\n Branch: ${env.GIT_BRANCH}\nBuild #${env.BUILD_NUMBER}: ${currentBuild.currentResult}\n Failure stage:${env.STAGE_NAME}"
+                        telegramSend message: "Job Name: ${env.JOB_NAME}\n Branch: ${env.GIT_BRANCH}\nBuild #${env.BUILD_NUMBER}: ${currentBuild.currentResult}\n Failure stage: '${env.STAGE_NAME}'"
                     }
                 }
             }
             
         }
-
 
         stage('Push to registry') {
             steps {
@@ -32,6 +31,14 @@ pipeline {
                 {
                     sh "docker push vulchakpavlo/prikm:latest"
                     sh "docker push vulchakpavlo/prikm:$BUILD_NUMBER"
+                }
+            }
+            post{
+                failure {
+                    script {
+                    // Send Telegram notification on success
+                        telegramSend message: "Job Name: ${env.JOB_NAME}\nBranch: ${env.GIT_BRANCH}\nBuild #${env.BUILD_NUMBER}: ${currentBuild.currentResult}\nFailure stage: '${env.STAGE_NAME}'"
+                    }
                 }
             }
         }
@@ -43,13 +50,12 @@ pipeline {
                 sh "docker image prune --force"
                 //sh "docker rmi \$(docker images -q) || true"
                 sh "docker run -d -p 80:80 vulchakpavlo/prikm"
-                
             }
             post{
                 failure {
                     script {
                     // Send Telegram notification on success
-                        telegramSend message: "Job Name: ${env.JOB_NAME}\n Branch: ${env.GIT_BRANCH}\nBuild #${env.BUILD_NUMBER}: ${currentBuild.currentResult}\n Failure stage:${env.STAGE_NAME}"
+                        telegramSend message: "Job Name: ${env.JOB_NAME}\nBranch: ${env.GIT_BRANCH}\nBuild #${env.BUILD_NUMBER}: ${currentBuild.currentResult}\nFailure stage: '${env.STAGE_NAME}'"
                     }
                 }
             }
@@ -61,12 +67,6 @@ pipeline {
             script {
                 // Send Telegram notification on success
                 telegramSend message: "Job Name: ${env.JOB_NAME}\n Branch: ${env.GIT_BRANCH}\nBuild #${env.BUILD_NUMBER}: ${currentBuild.currentResult}"
-            }
-        }
-        failure {
-            script {
-                // Send Telegram notification on success
-                telegramSend message: "Job Name: ${env.JOB_NAME}\n Branch: ${env.GIT_BRANCH}\nBuild #${env.BUILD_NUMBER}: ${currentBuild.currentResult}\n Failure stage:${env.STAGE_NAME}"
             }
         }
     }
