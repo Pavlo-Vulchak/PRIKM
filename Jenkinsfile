@@ -15,8 +15,8 @@ pipeline {
         stage('Image build') {
             steps {
                 sh "docker build -t prikm:latest ."
-                sh "docker tag prikm ${DOCKER_IMAGE}:latest"
-                sh "docker tag prikm ${DOCKER_IMAGE}:$BUILD_NUMBER"
+                sh "docker tag prikm $DOCKER_IMAGE:latest"
+                sh "docker tag prikm $DOCKER_IMAGE:$BUILD_NUMBER"
             }
             post{
                 failure {
@@ -33,8 +33,8 @@ pipeline {
             steps {
                 withDockerRegistry([ credentialsId: "dockerhub_token", url: "" ])
                 {
-                    sh "docker push ${DOCKER_IMAGE}:latest"
-                    sh "docker push ${DOCKER_IMAGE}:$BUILD_NUMBER"
+                    sh "docker push $DOCKER_IMAGE:latest"
+                    sh "docker push $DOCKER_IMAGE:$BUILD_NUMBER"
                 }
             }
             post{
@@ -49,7 +49,7 @@ pipeline {
 
         stage('Deploy image'){
             steps{
-                sh "docker stop \$(docker ps | grep '${DOCKER_IMAGE}' | awk '{print $1}') || true"
+                sh "docker stop \$(docker ps | grep '$DOCKER_IMAGE' | awk '{print $1}') || true"
                 sh "docker container prune --force"
                 sh "docker image prune --force"
                 //sh "docker rmi \$(docker images -q) || true"
