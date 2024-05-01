@@ -27,4 +27,4 @@ scrape_configs:
   - job_name: 'jenkins'
     metrics_path: '/prometheus'
     static_configs:
-      - targets: ['cuddly-spoon-g4x677qrv5wg2wjp4-8080.app.github.dev']
+      - targets: ['glorious-guide-69vr9rgxxjjjc4pv-8080.app.github.dev']
