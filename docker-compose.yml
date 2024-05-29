@@ -7,10 +7,10 @@ services:
       dockerfile: Dockerfile
     user: root
     environment:
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      TELEGRAM_BOT_NAME: ${TELEGRAM_BOT_NAME}
-      DOCKERHUB_USERNAME: ${DOCKERHUB_USERNAME}
-      DOCKERHUB_PASSWORD: ${DOCKERHUB_PASSWORD}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN_Vault}
+      TELEGRAM_BOT_NAME: ${TELEGRAM_BOT_NAME_Vault}
+      DOCKERHUB_USERNAME: ${DOCKERHUB_USERNAME_Vault}
+      DOCKERHUB_PASSWORD: ${DOCKERHUB_PASSWORD_Vault}
     restart: unless-stopped
     ports:
       - 50000:50000
